@@ -1,7 +1,3 @@
-/*
-ADD NOTE HERE
-*/
-
 #include <iostream>
 #include <thread>
 #include <chrono>
