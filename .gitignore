@@ -1,0 +1,10 @@
+# VSFiles&Folders
+
+.vs/
+Debug/
+Release/
+*.vcxproj*
+*.obj
+*.pdb
+*.sln
+

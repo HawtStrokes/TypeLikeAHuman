@@ -1,31 +1,36 @@
 #include <iostream>
 #include <thread>
-#include <chrono>
+//#include <chrono>
 #include <string>
+#include <random>
 
-class ScopedTimer {
-private:
-	std::chrono::time_point<std::chrono::high_resolution_clock> startTime;
-	std::chrono::time_point<std::chrono::high_resolution_clock> endTime;
-	const char* m_functionName;
-public:
-	ScopedTimer(const char* functionName) {
-		m_functionName = functionName;
-		startTime = std::chrono::high_resolution_clock::now();
-	}
-	~ScopedTimer()
-	{
-		endTime = std::chrono::high_resolution_clock::now();
-		std::chrono::high_resolution_clock::duration duration = endTime - startTime;
-		printf("The function <%s> took %.0000fms", m_functionName, duration.count() / 1000000.0);
-		std::cout << std::endl;
-	}
-};
+//class ScopedTimer {
+//private:
+//	std::chrono::time_point<std::chrono::high_resolution_clock> startTime;
+//	std::chrono::time_point<std::chrono::high_resolution_clock> endTime;
+//	const char* m_functionName;
+//public:
+//	ScopedTimer(const char* functionName) {
+//		m_functionName = functionName;
+//		startTime = std::chrono::high_resolution_clock::now();
+//	}
+//	~ScopedTimer()
+//	{
+//		endTime = std::chrono::high_resolution_clock::now();
+//		std::chrono::high_resolution_clock::duration duration = endTime - startTime;
+//		printf("The function <%s> took %.0000fms", m_functionName, duration.count() / 1000000.0);
+//		std::cout << std::endl;
+//	}
+//};
+
 
 void TypingEffect(const std::string& txt, unsigned int speedMulitplier = 1, bool endLine = true) {
 	//ScopedTimer sT(__func__);
+	std::random_device rD{};
+	std::mt19937 twister{ rD()};
+	std::uniform_int_distribution<int> dist(1, 5);
 	for (char c : txt) {
-		int randNum = (rand() % 5) + 1;
+		int randNum = dist(twister);// (rand() % 5) + 1;
 		std::this_thread::sleep_for(std::chrono::milliseconds(randNum * (100 / speedMulitplier)));
 		printf("%c", c);
 	}
@@ -72,7 +77,7 @@ int main(int argc, char** argv) {
 				speed = std::stoi(input.substr(7, input.length() - 7));
 				std::cout << "Speed set to " << speed << std::endl;
 			}
-			catch (const std::exception& e) {
+			catch (const std::exception&) {
 				std::cout << "Error changing speed" << std::endl;
 			}
 		}
